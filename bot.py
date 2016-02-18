@@ -39,11 +39,11 @@ class bot:
         return r
 
     def loadQuoteFile(self):
-        if not os.path.isfile('quotelist.qt'):
+        if not os.path.exists('quotelist.qt'):
             self.quotes = {}
+            return
         with open('quotelist.qt', 'rb') as filedescriptor:
             self.quotes = pickle.load(filedescriptor)
-
 
 def main():
     quotebot = bot('198568784:AAHPV1DGVN9HQagvR8z5r1kSHGd5JxtjS60')
