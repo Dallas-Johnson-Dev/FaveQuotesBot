@@ -5,7 +5,7 @@ import pickle
 def parse(bot, command_string):
     arglist = command_string.split(' ')
     if arglist[0] == '@favequotesbot':
-        arglist[0] = arglist[0][len('@favequotesbot '):]
+        del arglist[0]
     if arglist[0][0] == '/':
         arglist[0] = arglist[0][1:]
     if not arglist[0] in commands:
@@ -14,7 +14,12 @@ def parse(bot, command_string):
 
 
 def addquote(bot, args):
-    username = args[1]
+    username = ""
+    try:
+        username = args[1]
+    except IndexError:
+        return "Please enter a user!"
+        pass
     del args[0]
     del args[0]
     quote_string = " ".join(args)
@@ -26,8 +31,14 @@ def addquote(bot, args):
 
 
 def removeQuote(bot, args):
-    username = args[1]
-    index = int(args[2])
+    username = ""
+    index = 0
+    try:
+        username = args[1]
+        index = int(args[2])
+    except IndexError:
+        return "Please enter a user and an index!"
+        pass
     msg = ""
     if not username in bot.quotes:
         return "User does not exist!"
@@ -42,7 +53,12 @@ def removeQuote(bot, args):
 
 
 def removeuser(bot, args):
-    username = args[1]
+    username = ""
+    try:
+        username = args[1]
+    except IndexError:
+        return "Please enter a user to remove!"
+        pass
     if not username in bot.quotes:
         return "User does not exist!"
     bot.quotes.pop(args[1])
@@ -66,7 +82,7 @@ def query(bot, args):
 def showUsers(bot, args):
     userlist = "Users in quote book: \n"
     keyList = list(bot.quotes.keys())
-    for x in range(0,len(keyList)):
+    for x in range(0,len(keyList)-1):
         userlist = userlist + keyList[x] + "\n"
     return userlist
 
@@ -75,7 +91,7 @@ def showAll(bot, args):
     if not args[1] in bot.quotes:
         return "User does not exist!"
     quotelist = "Quotes shown by index number first:\n"
-    for x in range(0, len(bot.quotes[args[1]])):
+    for x in range(0, len(bot.quotes[args[1]])-1):
         quotelist = quotelist + str(x) + " : " + bot.quotes[args[1]][x] + "\n"
     return quotelist
 
