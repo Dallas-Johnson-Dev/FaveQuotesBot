@@ -84,17 +84,27 @@ def query(bot, args):
 def showUsers(bot, args):
     userlist = "Users in quote book: \n"
     keyList = list(bot.quotes.keys())
-    for x in range(0,len(keyList)-1):
-        userlist = userlist + keyList[x] + "\n"
+    index = 0
+    #I have no idea why the for loop is fucked here.
+    #Yay hackjobs!
+    while True:
+        if index == len(keyList):
+            break
+        userlist = userlist + keyList[index] + "\n"
+        index = index + 1
     return userlist
 
 
 def showAll(bot, args):
+    index = 0
     if not args[1] in bot.quotes:
         return "User does not exist!"
     quotelist = "Quotes shown by index number first:\n"
-    for x in range(0, len(bot.quotes[args[1]])-1):
-        quotelist = quotelist + str(x) + " : " + bot.quotes[args[1]][x] + "\n"
+    while True:
+        if index == len(bot.quotes[args[1]]):
+            break
+        quotelist = quotelist + str(index) + " : " + bot.quotes[args[1]][index] + "\n"
+        index = index + 1
     return quotelist
 
 
