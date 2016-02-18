@@ -27,12 +27,13 @@ def addquote(bot, args):
         bot.quotes[username] = []
     bot.quotes[username].append(quote_string)
     savequotedict(bot.quotes)
-    return 'Added the new quote!'
+    return 'Added \"{0}\" to the quote book!'.format(quote_string)
 
 
 def removeQuote(bot, args):
     username = ""
     index = 0
+    temp = ""
     try:
         username = args[1]
         index = int(args[2])
@@ -43,9 +44,10 @@ def removeQuote(bot, args):
     if not username in bot.quotes:
         return "User does not exist!"
     try:
+        temp = bot.quotes[username][index]
         del bot.quotes[username][index]
         savequotedict(bot.quotes)
-        msg = "Removed quote successfully!"
+        msg = "Removed the quote \"{0}\" successfully!".format(temp)
     except IndexError:
         msg = "That quote does not exist!"
         pass
@@ -74,7 +76,7 @@ def query(bot, args):
     try:
         quote = bot.quotes[username][int(args[2])]
     except IndexError:
-        quote = 'That index is out of range!'
+        quote = 'That quote does not exist!'
         pass
     return quote
 
