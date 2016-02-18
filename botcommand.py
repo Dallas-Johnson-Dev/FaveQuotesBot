@@ -10,6 +10,7 @@ def parse(bot, command_string):
         if arglist[0][0] == '/':
             if "@" in arglist[0]:
                 arglist[0] = arglist[0][1:arglist[0].find('@')]
+                arglist.append(" ")
             else:
                 arglist[0] = arglist[0][1:]
         if not arglist[0] in commands:
