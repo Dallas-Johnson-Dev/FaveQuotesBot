@@ -4,16 +4,20 @@ import pickle
 
 def parse(bot, command_string):
     arglist = command_string.split(' ')
-    if arglist[0] == '@favequotesbot':
-        del arglist[0]
-    if arglist[0][0] == '/':
-        if "@" in arglist[0]:
-            arglist[0] = arglist[0][1:arglist[0].find('@')]
-        else:
-            arglist[0] = arglist[0][1:]
-    if not arglist[0] in commands:
-        return 'I didn\'t understand that command!'
-    return commands[arglist[0]](bot, arglist)
+    try:
+        if arglist[0] == '@favequotesbot':
+            del arglist[0]
+        if arglist[0][0] == '/':
+            if "@" in arglist[0]:
+                arglist[0] = arglist[0][1:arglist[0].find('@')]
+            else:
+                arglist[0] = arglist[0][1:]
+        if not arglist[0] in commands:
+            return 'I didn\'t understand that command!'
+        return commands[arglist[0]](bot, arglist)
+    except IndexError:
+        return "Please enter a valid command!"
+        pass
 
 
 def addquote(bot, args):
