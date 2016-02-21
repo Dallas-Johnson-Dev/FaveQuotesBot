@@ -8,6 +8,8 @@ def parse(bot, command_string):
         del arglist[0]
     if arglist[0][0] == '/':
         arglist[0] = arglist[0][1:]
+        if '@favequotesbot' in arglist[0]:
+            arglist[0] = arglist[0][:len(arglist[0])-len('@favequotesbot')]
     if not arglist[0] in commands:
         return 'I didn\'t understand that command!'
     return commands[arglist[0]](bot, arglist)
