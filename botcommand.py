@@ -30,7 +30,7 @@ def addquote(bot, args):
     return 'Added \"{0}\" to the quote book!'.format(quote_string)
 
 
-def removeQuote(bot, args):
+def removequote(bot, args):
     username = ""
     index = 0
     temp = ""
@@ -69,33 +69,36 @@ def removeuser(bot, args):
 
 
 def query(bot, args):
-    username = args[1]
     quote = ""
-    if not username in bot.quotes:
-        return "User does not exist!"
     try:
-        quote = bot.quotes[username][int(args[2])]
+        if not args[1] in bot.quotes:
+            return "User does not exist!"
+        quote = bot.quotes[args[1]][int(args[2])]
     except IndexError:
         quote = 'That quote does not exist!'
         pass
     return quote
 
 
-def showUsers(bot, args):
+def showusers(bot, args):
     userlist = "Users in quote book: \n"
-    keyList = list(bot.quotes.keys())
-    for x in range(0,len(keyList)-1):
-        userlist = userlist + keyList[x] + "\n"
+    keylist = list(bot.quotes.keys())
+    for x in range(0, len(keylist) - 1):
+        userlist = userlist + keylist[x] + "\n"
     return userlist
 
 
-def showAll(bot, args):
-    if not args[1] in bot.quotes:
-        return "User does not exist!"
-    quotelist = "Quotes shown by index number first:\n"
-    for x in range(0, len(bot.quotes[args[1]])-1):
-        quotelist = quotelist + str(x) + " : " + bot.quotes[args[1]][x] + "\n"
-    return quotelist
+def showall(bot, args):
+    try:
+        if not args[1] in bot.quotes:
+            return "User does not exist!"
+        quotelist = "Quotes shown by index number first:\n"
+        for x in range(0, len(bot.quotes[args[1]]) - 1):
+            quotelist = quotelist + str(x) + " : " + bot.quotes[args[1]][x] + "\n"
+        return quotelist
+    except IndexError:
+        return "Please enter a username!"
+        pass
 
 
 def printhelp(bot, args):
@@ -111,12 +114,12 @@ def savequotedict(quote_dict):
             pass
 
 
-#Forward declare all of the methods. Just go with it.
-#This won't work otherwise.
-commands = {'add':addquote,
-            'remove':removeQuote,
-            'removeuser':removeuser,
-            'query':query,
-            'help':printhelp,
-            'showusers':showUsers,
-            'showall':showAll}
+# Forward declare all of the methods. Just go with it.
+# This won't work otherwise.
+commands = {'add': addquote,
+            'remove': removequote,
+            'removeuser': removeuser,
+            'query': query,
+            'help': printhelp,
+            'showusers': showusers,
+            'showall': showall}
